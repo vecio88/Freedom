@@ -22,9 +22,7 @@ const AnagraficaPazienteComp : React.FC<Paziente> = ({idAddress, nome, cognome})
               </div>
             </div>
 
-    
-            {/* <button className="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button> */}
-          </form>
+        </form>
     )
 }
 
