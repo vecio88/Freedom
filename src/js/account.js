@@ -29,7 +29,13 @@ App = {
         App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
       }
       web3 = new Web3(App.web3Provider);
-      console.log("initContract")
+      
+      App.account.address = web3.eth.accounts[accountIndex];
+      // console.log(App.account.address)
+      document.getElementById('accountAddress').innerText = App.account.address;
+
+
+      // console.log("initContract")
       return App.initContract();
     },
   
@@ -70,12 +76,15 @@ App = {
     },
   
     getListaBrani: async function() {
-      console.log("getListaBrani")
+      console.log("getListaBrani", App.account.address)
      
       var freedomInstance;
       // console.log(App.contracts.Freedom)
       // deployed crea l'istanza che comunica con lo Smart Contract
-      await App.contracts.Freedom.deployed().then(function(instance) {
+      
+      
+      
+      /*await App.contracts.Freedom.deployed().then(function(instance) {
         freedomInstance = instance;
         return freedomInstance.getLastTokenId.call();
       }).then(async function(maxTokenId) {
@@ -115,7 +124,7 @@ App = {
       }
     }).catch(function(err) {
       console.log(err.message);
-    });
+    }); */
 
     // return App.bindEvents();
   },

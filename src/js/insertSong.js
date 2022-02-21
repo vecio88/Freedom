@@ -1,5 +1,3 @@
-const SmartContractAddress = "0x7a6B0C2f0DCD422E9a190030dB7Ce986D7AF432E"
-
 App = {
   web3Provider: null,
   contracts: {},
@@ -31,7 +29,8 @@ App = {
       App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
     }
     web3 = new Web3(App.web3Provider);
-
+    App.account.address = web3.eth.accounts[accountIndex];
+    document.getElementById("pubkey").setAttribute("value", App.account.address);
     return App.initContract();
   },
 
@@ -53,35 +52,6 @@ App = {
      return App;
   },
 
-  getDatiAccount: async function() {
-    console.log("Recupero i dati dell'account")
-
-    var self = this;
-
-    await web3.eth.getAccounts(function(error, accounts) {
-      if (error) {
-        console.log(error);
-      }
-    
-      // var account = accounts[4];
-      
-
-      self.account.address = accounts[4];
-      document.getElementById("pubkey").setAttribute("value", self.account.address);
-
-      
-      //web3.eth.getBalance(self.account.address, function(error, ether) {
-        // c : coefficients / significand
-        // e : exponent
-        // s : sign
-
-
-        //console.log(ether)
-      //});
-        });
-
-  },
-
    addBrano: async function(accountFrom, jsonBrano) {
     const CostoInserimentoBrano = "7000000000000000000";
 
@@ -89,7 +59,7 @@ App = {
       freedomInstance = instance;
       
       // Execute adopt as a transaction by sending account
-      return  freedomInstance.depositaEth({from: accountFrom, value: CostoInserimentoBrano });
+      return  freedomInstance.depositaEthAddBrano({from: accountFrom, value: CostoInserimentoBrano });
     }).then(function(result) {
       return true;
     }).catch(function(err) {
@@ -128,7 +98,6 @@ App = {
 $(function() {
     $(window).load(function() {
       App.initWeb3();
-      App.getDatiAccount();
     });
   });
 
