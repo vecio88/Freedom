@@ -1,6 +1,6 @@
 import Web3 from 'web3';
-import ContractJson from '../../../../build/contracts/Adoption.json';
-// import contract from '../js/truffle-contract';
+import ContractJson from '../../../../build/contracts/Subfree.json';
+import contract from "@truffle/contract";
 export const WEB3_CONNECTED = 'WEB3_CONNECTED';
 export const WEB3_DISCONNECTED = 'WEB3_DISCONNECTED';
 export const TODOS_CONTRACT_INSTANTIATED = 'TODOS_CONTRACT_INSTANTIATED';
@@ -53,7 +53,7 @@ export function instantiateContract() {
   console.log("instantiateContract")
   return (dispatch: any, getState: () => { (): any; new(): any; web3: any; }) => {
     const web3 = getState().web3;
-    const contratto = contract(ContractJson);
+    const contratto = TruffleContract(ContractJson);
     /*   todos.setProvider(web3.currentProvider);
     return todos.deployed().then((todosContract) => {
       dispatch({

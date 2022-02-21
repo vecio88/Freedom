@@ -1,0 +1,129 @@
+body {
+    background-color: #282c34;
+}
+
+.text-center {
+    color: azure;
+    margin-top: 20px;
+}
+
+a {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.containerPrincpiale {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.subContainer {
+    width: 60%;
+
+}
+
+.subContainerElencoBrani, .subContainerAccount {
+    width: 80%;
+}
+
+.indexButtonContainer {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.indexButtonContainer button {
+    width: 200px;
+    height: 100%;
+}
+
+.nuovoBranoContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.elencoBraniContainer {
+    width: 100%;
+    display: flex;
+    background-color: transparent;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.nuovoBranoContainer form {
+    width: 80%;
+    padding-top: 15px;
+}
+
+.input-group {
+    width: 100%;
+}
+
+.input-group button {
+    margin-left: 30%;
+}
+
+.songTemplate {
+    width: 240px;
+    min-height: 470px;
+    margin-bottom: 20px;
+}
+
+/* Elenco Brani */
+.songTemplate p {
+    margin-bottom: 5px;
+}
+
+.card-img-top {
+    height: 210px; 
+    width: 210px; 
+    display: block;
+    margin: 10px 15px;
+}
+
+.btn-group {
+    margin-top: 10px;
+}
+
+/* Account */
+.accountContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    justify-content: flex-start;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.accountContainer .input-group {
+    width: 45%;
+    margin-top: 20px;
+}
+
+.accountContainer p {
+    display: block;
+}
+
+#elencoBraniInAccountContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+#elencoBraniInAccountContainer .songTemplate {
+    
+}
+    

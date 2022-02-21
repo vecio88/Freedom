@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>SubFree - Elenco Brani</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="row containerPrincpiale">
+        <div class="subContainer">
+          <h1 class="text-center"><a href="index.html">Freedom</a> - Nuovo Brano</h1>
+          <hr/>
+          <br/>
+          <div class="nuovoBranoContainer">
+            <form id="formInsertSong">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">PubKey</span>
+                </div>
+                <input type="text" class="form-control" id="pubkey" aria-describedby="basic-addon1" disabled>
+              </div>
+
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Titolo del Brano" id="titoloCanzone" aria-describedby="basic-addon1">
+              </div>
+
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Breve descrizione" id="breveDescrizione" aria-describedby="basic-addon1">
+              </div>
+
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Titolo Album" id="titoloAlbum" aria-describedby="basic-addon1">
+              </div>
+
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Link alla copertina" id="linkCopertina" aria-describedby="basic-addon1">
+              </div>
+
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Link al brano" id="linkAlBrano" aria-describedby="basic-addon1">
+              </div>
+
+              <div class="input-group mb-3">
+                <button class="btn btn-primary btn-lg btn-ins-song" id="formInsertSongSubmit" type="button">Salva nella Blockchain</button>
+              </div>
+
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+
+      
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <!-- script src="js/app.js"></script -->
+    <script src="js/insertSong.js"></script>
+  </body>
+</html>
