@@ -31,6 +31,7 @@ App = {
       }
       web3 = new Web3(App.web3Provider);
       App.account.address = web3.eth.accounts[accountIndex];
+      document.getElementById('accountAddress').innerText = App.account.address;
   
       return App.initContract();
     },

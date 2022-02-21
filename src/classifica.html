@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Freedom - Elenco Brani</title>
+    <title>Freedom - Classifica</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -22,7 +22,7 @@
     <div class="container">
       <div class="row containerPrincpiale">
         <div class="subContainerElencoBrani">
-          <h1 class="text-center"><a href="index.html">Freedom</a> - Elenco Brani</h1>
+          <h1 class="text-center"><a href="index.html">Freedom</a> - Classifica</h1>
           <hr/>
           <br/>
           <div class="accountContainer">
@@ -31,21 +31,23 @@
             <p><b>ETH: </b><span id="accountBalance"></span></p>
 
           </div>
-          <div class="elencoBraniContainer">
+          <div class="elencoBraniContainerClassifica">
             
           </div>
 
-          <div id="songTemplate" style="display: none;">
-            <div class="card box-shadow songTemplate">
-              <img class="card-img-top" id="imgCopertina" alt="Thumbnail [210x210]" data-holder-rendered="true">
+          <div class="row"><button id="pagaCompensi" type="button" class="btn btn-success">Paga Compensi</button></div>
+
+
+          <div id="songTemplateClassifica" style="display: none;">
+            <div class="card box-shadow songTemplateClassifica">
+              <img class="card-img-top" id="imgCopertina" alt="Thumbnail [150x150]" data-holder-rendered="true">
               <div class="card-body">
                 <p class="card-text"><b>Titolo: </b><span id="titoloBrano"></span></p>
                 <p class="card-text"><b>Album: </b><span id="nomeAlbum"></span></p>
-                <p class="card-text" id="description"></p>
+                <p class="card-text"><b>Owner: </b><span id="ownerSong"></span></p>
                 <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" id="ascoltaLaCanzone" data-id="0" class="btn btn-sm btn-outline-secondary">Ascolta</button>
-                </div>
+                <div class=""><b>Brano ascoltato:&nbsp;</b><span id="numAscolti"></span>&nbsp;volte</div>
+
                 </div>
               </div>
             </div>
@@ -56,6 +58,7 @@
 
       
     </div>
+    
 
     
 
@@ -66,6 +69,6 @@
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/elencoBrani.js"></script>
+    <script src="js/classifica.js"></script>
   </body>
 </html>

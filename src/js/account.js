@@ -31,8 +31,13 @@ App = {
       web3 = new Web3(App.web3Provider);
       
       App.account.address = web3.eth.accounts[accountIndex];
-      // console.log(App.account.address)
+
+      balanceInWei = web3.eth.getBalance(App.account.address)+ "";
+      balanceInEth = parseFloat(balanceInWei / 1000000000000000000).toFixed(8); // 79,90512904
+
+      // console.log("Ciao",parseFloat("123.456").toFixed(2) )
       document.getElementById('accountAddress').innerText = App.account.address;
+      document.getElementById('accountBalance').innerText = balanceInEth;
 
 
       // console.log("initContract")
@@ -79,54 +84,52 @@ App = {
       console.log("getListaBrani", App.account.address)
      
       var freedomInstance;
-      // console.log(App.contracts.Freedom)
-      // deployed crea l'istanza che comunica con lo Smart Contract
       
-      
-      
-      /*await App.contracts.Freedom.deployed().then(function(instance) {
+      await App.contracts.Freedom.deployed().then(function(instance) {
         freedomInstance = instance;
         return freedomInstance.getLastTokenId.call();
       }).then(async function(maxTokenId) {
-  
-      console.log("maxTokenId: " + maxTokenId)
-      var songsRow = $('#elencoBraniInAccountContainer');
-      var songTemplate = $('#songTemplate');
-      
-      for (i = 1; i <= maxTokenId; i++) {
 
-        var indice = i;
+        // console.log("ciao" + maxTokenId)
+        var songsRow = $('#elencoBraniInAccountContainer');
+        var songTemplate = $('#songTemplate');
 
-        var songJson = await App.getASong(freedomInstance.tokenURI(indice)).then(
-          json => {
-            return json
-          }, reason => {
-            // rejection
-            console.log("Num Elementi: " + maxTokenId, "Indice: " + indice)
-          })
+        for (i = 1; i <= maxTokenId; i++) {
 
-          songTemplate.find('#imgCopertina').attr('src', songJson.attributes[0].copertina);
-          songTemplate.find('#titoloBrano').text(songJson.name);
-          songTemplate.find('#nomeAlbum').text(songJson.attributes[0].album);
-          songTemplate.find('#description').text(songJson.description);
-          // songTemplate.find('#ascoltaLaCanzone').attr('data-id', indice);
-          //console.log(indice, songJson.name)
-          
-          var numAscolti = await App.getASong(freedomInstance.getAscolti(indice)).then(
-            numAscolti => {
-              return numAscolti;
+          await freedomInstance.ownerOf(i).then(async anOwner => {
+            // console.log(App.account.address, anOwner)
+            if(anOwner == App.account.address) {
+              let songJson = await freedomInstance.tokenURI(i).then(
+                json => {
+                  return JSON.parse(json)
+                }, reason => {
+                  // rejection
+                  console.log("Num Elementi: " + maxTokenId, "Indice: " + indice)
+                })
+                // console.log(songJson)
+                songTemplate.find('#imgCopertina').attr('src', songJson.attributes[0].copertina);
+                songTemplate.find('#titoloBrano').text(songJson.name);
+                songTemplate.find('#nomeAlbum').text(songJson.attributes[0].album);
+                songTemplate.find('#description').text(songJson.description);
+                
+                var numAscolti = await App.getASong(freedomInstance.getAscolti(i)).then(
+                  numAscolti => {
+                    return numAscolti;
+                });
+
+                songTemplate.find('#numAscolti').text(numAscolti);
+                
+                songsRow.append(songTemplate.html());
+            }
           });
 
-          songTemplate.find('#numAscolti').text(numAscolti);
-          
-          songsRow.append(songTemplate.html());
-        
-      }
-    }).catch(function(err) {
-      console.log(err.message);
-    }); */
-
-    // return App.bindEvents();
+        }
+      
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+      
+     
   },
   
   getASong(resultTokenURI) {

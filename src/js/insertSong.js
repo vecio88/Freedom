@@ -30,7 +30,12 @@ App = {
     }
     web3 = new Web3(App.web3Provider);
     App.account.address = web3.eth.accounts[accountIndex];
-    document.getElementById("pubkey").setAttribute("value", App.account.address);
+    balanceInWei = web3.eth.getBalance(App.account.address)+ "";
+    balanceInEth = parseFloat(balanceInWei / 1000000000000000000).toFixed(8); // 79,90512904
+
+    // console.log("Ciao",parseFloat("123.456").toFixed(2) )
+    document.getElementById('accountAddress').innerText = App.account.address;
+    document.getElementById('accountBalance').innerText = balanceInEth;
     return App.initContract();
   },
 
