@@ -45,7 +45,7 @@ contract Freedom is ERC721URIStorage {
         require(msg.sender != address(0), "indirizzo non valido");
         // controlla se il token uri gia esiste
         require(!tokenURIExists[_tokenURI], "URI esistente");
-        uint256 amount = 2 ether;
+        uint256 amount = 7 ether;
         //controlla se il balance del chiamante è sufficiente per inserire una canzone
         require(msg.sender.balance >= amount);
         //incrementa il contatore delle canzoni
@@ -161,8 +161,9 @@ contract Freedom is ERC721URIStorage {
             if (i < 10) {
                 amount += value / 10;
             }
-            // (bool sent, ) = payable(ownerOf(classifica[i].tokenId)).call{
-              inviaEther(payable(ownerOf(classifica[i].tokenId)),amount);
+            (bool sent, ) = payable(ownerOf(classifica[i].tokenId)).call{value: amount }("");
+            require(sent, "Failed to send Ether");
+            // inviaEther(payable(ownerOf(classifica[i].tokenId)),amount);
             
         }
         balanceAnnuale = 0;
@@ -181,5 +182,18 @@ contract Freedom is ERC721URIStorage {
         require(sent, "Transfer Failed");
         return sent;
     }
+
+    function checkDisponibilita () public payable returns(bool) {
+        if (msg.value <= msg.sender.balance) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function getBalanceAnnuale () public view returns (uint256) {
+        return balanceAnnuale;
+    }
+    
 
 }

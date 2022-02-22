@@ -62,17 +62,18 @@ App = {
         console.log("getListaBrani")
 
         var freedomInstance;
+        var songsRow = $('.elencoBraniContainerClassifica');
+            var songTemplate = $('#songTemplateClassifica');
 
         // deployed crea l'istanza che comunica con lo Smart Contract
-        await App.contracts.Freedom.deployed().then(function(instance) {
+        let listOfSong = await App.contracts.Freedom.deployed().then(function(instance) {
             freedomInstance = instance;
   
             return freedomInstance.getLastTokenId.call();
         }).then(async function(maxTokenId) {
     
             console.log("maxTokenId: " + maxTokenId)
-            var songsRow = $('.elencoBraniContainerClassifica');
-            var songTemplate = $('#songTemplateClassifica');
+            
 
             var listOfSong = [];
 
@@ -100,31 +101,34 @@ App = {
                     }))
             }
 
-            // console.log(listOfSong)
-
-            listOfSong.sort(a => {return -a.ascolti}).map(songJson => {
-
-                songTemplate.find('#imgCopertina').attr('src', songJson.attributes[0].copertina);
-                songTemplate.find('#titoloBrano').text(songJson.name);
-                songTemplate.find('#nomeAlbum').text(songJson.attributes[0].album);
-                songTemplate.find('#ownerSong').text(songJson.owner);
-                songTemplate.find('#numAscolti').text(songJson.ascolti);
-                songsRow.append(songTemplate.html());
-            })
+           return listOfSong;
 
         }).catch(function(err) {
-        console.log(err.message);
+          console.log(err.message);
         }); 
+
+        listOfSong.sort((a, b) => (a.ascolti < b.ascolti ? 1 : -1))
+              .map(songJson => {
+                  // console.log(songJson)
+                  songTemplate.find('#imgCopertina').attr('src', songJson.attributes[0].copertina);
+                  songTemplate.find('#titoloBrano').text(songJson.name);
+                  songTemplate.find('#nomeAlbum').text(songJson.attributes[0].album);
+                  songTemplate.find('#ownerSong').text(songJson.owner);
+                  songTemplate.find('#numAscolti').text(songJson.ascolti);
+                  songsRow.append(songTemplate.html());
+              })
 
     return App.bindEvents();
   },
 
   handlePagamentoCompenso: async function() {
-    await App.contracts.Freedom.deployed().then(function(instance) {
+    var esitoPagamento = await App.contracts.Freedom.deployed().then(async function(instance) {
         freedomInstance = instance;
-
-        freedomInstance.pagamentoClassifica.call();
+        console.log(await freedomInstance.getBalanceAnnuale() + "")
+        return await freedomInstance.pagamentoClassifica({from: web3.eth.accounts[0], gas: 6721975, gasPrice: '30000000'});
     });
+
+    console.log(esitoPagamento)
   },
 
     // Bind degli eventi 

@@ -31,7 +31,12 @@ App = {
       }
       web3 = new Web3(App.web3Provider);
       App.account.address = web3.eth.accounts[accountIndex];
+      balanceInWei = web3.eth.getBalance(App.account.address)+ "";
+      balanceInEth = parseFloat(balanceInWei / 1000000000000000000).toFixed(8); // 79,90512904
+  
+      // console.log("Ciao",parseFloat("123.456").toFixed(2) )
       document.getElementById('accountAddress').innerText = App.account.address;
+      document.getElementById('accountBalance').innerText = balanceInEth;
   
       return App.initContract();
     },
@@ -50,38 +55,6 @@ App = {
         // Use our contract to retrieve and mark the adopted pets
         return App.getListaBrani();
       });
-  
-    },
-  
-    getDatiAccount: async function() {
-      console.log("Recupero i dati dell'account")
-  
-      var self = this;
-  
-      await web3.eth.getAccounts(function(error, accounts) {
-        if (error) {
-          console.log(error);
-        }
-      
-        // var account = accounts[4];
-        
-  
-        self.account.address = accounts[4];
-        document.getElementById("pubkey").setAttribute("value", self.account.address);
-  
-        
-        //web3.eth.getBalance(self.account.address, function(error, ether) {
-          // c : coefficients / significand
-          // e : exponent
-          // s : sign
-  
-  
-          //console.log(ether)
-        //});
-          });
-  
-    
-  
   
     },
   
@@ -145,23 +118,23 @@ App = {
 
     const COSTO_ASCOLTO_FREDOM = "2000000000000000000";
     const COSTO_ASCOLTO_PIATTAFORMA = "1000000000000000000";
-    let accountAddress = web3.eth.accounts[4];
+    // let accountAddress = web3.eth.accounts[4];
 
     checkPagamento = await App.contracts.Freedom.deployed().then(function(instance) {
       freedomInstance = instance;
       
-      console.log(accountAddress)
+      console.log( App.account.address)
       // Execute adopt as a transaction by sending account
-      return  freedomInstance.isPiattaforma({from: accountAddress});
+      return  freedomInstance.isPiattaforma({from:  App.account.address});
     }).then(function(result) {
       let costoAscolto = COSTO_ASCOLTO_FREDOM
       if (result) costoAscolto = COSTO_ASCOLTO_PIATTAFORMA
 
-      return freedomInstance.depositaEthaddAscolti({from: accountAddress, value: costoAscolto })
+      return freedomInstance.depositaEthaddAscolti({from:  App.account.address, value: costoAscolto })
     }).then(function(checkPagamento) {
       
       if(checkPagamento) {
-        return freedomInstance.addAscolti(parseInt(tokenId), {from: accountAddress});
+        return freedomInstance.addAscolti(parseInt(tokenId), {from:  App.account.address});
       } else {
         alert("Si è verificato un problema con il pagamento")
       }
@@ -171,18 +144,6 @@ App = {
       return false;
     });
 
-    // console.log("Esito Pagamento", checkPagamento)
-
-    if(checkPagamento) {}
-
-    // deployed crea l'istanza che comunica con lo Smart Contract
-    /*await App.contracts.Freedom.deployed().then(function(instance) {
-      var accountFrom = web3.eth.accounts[4];
-  
-      instance.addAscolti(parseInt(tokenId), {from: accountFrom});
-    }).catch(function(err) {
-      console.log(err.message);
-    }); */
   },
     // Bind degli eventi 
   bindEvents: function() {

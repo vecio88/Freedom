@@ -36,6 +36,8 @@ App = {
     // console.log("Ciao",parseFloat("123.456").toFixed(2) )
     document.getElementById('accountAddress').innerText = App.account.address;
     document.getElementById('accountBalance').innerText = balanceInEth;
+    
+    document.getElementById("pubkey").setAttribute("value", App.account.address);
     return App.initContract();
   },
 
@@ -62,33 +64,21 @@ App = {
 
     checkPagamento = await App.contracts.Freedom.deployed().then(function(instance) {
       freedomInstance = instance;
-      
-      // Execute adopt as a transaction by sending account
+      return  freedomInstance.checkDisponibilita({from: accountFrom, value: CostoInserimentoBrano });
+    }).then(async function() {
+      return  await freedomInstance.addCanzone(jsonBrano, {from: accountFrom, gas: 6721975, gasPrice: '30000000'});
+    }).then(async function(tokenId) {
+      console.log("TokenID: " + tokenId)
       return  freedomInstance.depositaEthAddBrano({from: accountFrom, value: CostoInserimentoBrano });
-    }).then(function(result) {
-      return true;
+    }).then(async function() {
+      return  true
     }).catch(function(err) {
       console.log(err.message);
       return false;
     });
 
     console.log("Esito Pagamento", checkPagamento)
-
-    if(checkPagamento) {
-
-      await App.contracts.Freedom.deployed().then(function(instance) {
-        freedomInstance = instance;
-       
-        // Execute adopt as a transaction by sending account
-        return  freedomInstance.addCanzone(jsonBrano, {from: accountFrom, gas: 6721975, gasPrice: '30000000'});
-          }).then(function(result) {
-             
-            return true;
-          }).catch(function(err) {
-            console.log(err.message);
-            return false;
-          });
-    }
+    return checkPagamento;
     
   },
 
@@ -124,5 +114,5 @@ document.getElementById("formInsertSongSubmit").addEventListener("click", functi
         alert("Si è verificato un errore")
     }
 
-    return;
+    // document.getElementById("formInsertSong").submit();
 });
